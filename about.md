@@ -31,6 +31,54 @@ I hold an MSc in Machine Learning and AI from Liverpool John Moores University, 
   </li>
 </ul>
 
+## Strengths
+
+<p class="section-label" style="margin-top:0;">Gallup CliftonStrengths <span class="more">top 5</span></p>
+<div class="chips">
+  <div class="chip"><span class="chip__rank">01</span><span class="chip__name">Activator</span></div>
+  <div class="chip"><span class="chip__rank">02</span><span class="chip__name">Ideation</span></div>
+  <div class="chip"><span class="chip__rank">03</span><span class="chip__name">Strategic</span></div>
+  <div class="chip"><span class="chip__rank">04</span><span class="chip__name">Learner</span></div>
+  <div class="chip"><span class="chip__rank">05</span><span class="chip__name">Connectedness</span></div>
+</div>
+
+<div class="resume-cols" style="margin-top:3.2rem;">
+  <div class="resume-block">
+    <h3>Education</h3>
+    <div class="resume-item">
+      <div class="resume-item__title">MSc, Artificial Intelligence</div>
+      <div class="resume-item__meta"><span>Liverpool John Moores University</span><span>2021–22</span><span>Merit</span></div>
+    </div>
+    <div class="resume-item">
+      <div class="resume-item__title">PG Diploma, Machine Learning &amp; AI</div>
+      <div class="resume-item__meta"><span>IIIT Bangalore</span><span>2020–21</span><span>3.3/4</span></div>
+    </div>
+    <div class="resume-item">
+      <div class="resume-item__title">BE, Computer Science &amp; Engineering</div>
+      <div class="resume-item__meta"><span>Bhilai Institute of Technology, Durg</span><span>2011–15</span></div>
+    </div>
+  </div>
+  <div class="resume-block">
+    <h3>Credentials</h3>
+    <div class="resume-item">
+      <div class="resume-item__title">MLOps Specialization</div>
+      <div class="resume-item__meta"><span>Duke University</span><span>2026</span></div>
+    </div>
+    <div class="resume-item">
+      <div class="resume-item__title">Customer-Centric Design (CCD)</div>
+      <div class="resume-item__meta"><span>Stryker SGTC</span><span>internal</span></div>
+    </div>
+    <div class="resume-item">
+      <div class="resume-item__title">TRIZ Level 1</div>
+      <div class="resume-item__meta"><span>Structured inventive problem solving</span></div>
+    </div>
+    <div class="resume-item">
+      <div class="resume-item__title">Microsoft Azure Fundamentals (AZ-900)</div>
+      <div class="resume-item__meta"><span>Cloud concepts</span><span>2023</span></div>
+    </div>
+  </div>
+</div>
+
 ## Elsewhere
 
 Find me on [LinkedIn](https://www.linkedin.com/in/prakhar-thakur/) and [GitHub](https://github.com/itsprakhar). This blog is where I write at more length than a post allows. The writing here is my own and does not represent my employer.
