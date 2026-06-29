@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-06-29T23:25:36+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">Prakhar Thakur</title><subtitle>Essays on applied machine learning, self-supervised and representation learning, and the philosophy of mind as it bears on AI architecture. Written by Prakhar Thakur, a computer vision engineer working on production medical AI.</subtitle><author><name>Prakhar Thakur</name></author><entry><title type="html">Plato’s Cave, and When a JEPA Model Actually Learns the World</title><link href="http://localhost:4000/blog/platos-cave-and-when-a-jepa-model-learns-the-world/" rel="alternate" type="text/html" title="Plato’s Cave, and When a JEPA Model Actually Learns the World" /><published>2026-06-08T00:00:00+05:30</published><updated>2026-06-08T00:00:00+05:30</updated><id>http://localhost:4000/blog/platos-cave-and-when-a-jepa-model-learns-the-world</id><content type="html" xml:base="http://localhost:4000/blog/platos-cave-and-when-a-jepa-model-learns-the-world/"><![CDATA[<p>Plato argued we only ever see shadows on a cave wall, never reality itself. A paper I read this week takes that metaphor seriously and proves, mathematically, when a neural network can reconstruct reality from the shadows.</p>
+
+<!--more-->
+
+<p>The paper is “When Does LeJEPA Learn a World Model?” (Klindt, LeCun, Balestriero, arXiv 2605.26379), and I think it deserves more attention.</p>
+
+<p>The question it answers is deceptively simple: when you train a JEPA-style model, does the learned representation actually capture the true structure of the world, or just something useful enough to pass your benchmark?</p>
+
+<p>It turns out there is now a mathematical proof for when the answer is yes. If the world’s latent variables are Gaussian, and you train with alignment plus Gaussian regularization (LeJEPA / SIGReg), your encoder is guaranteed to linearly recover the true latent variables up to a rotation. No entanglement, no nonlinear warping. Just a clean rotation of the real degrees of freedom.</p>
+
+<p>They call this “linear identifiability,” and it matters because:</p>
+
+<ul>
+  <li>Linear probes actually work, not just approximately.</li>
+  <li>Planning in the learned latent is mathematically equivalent to planning in the true world.</li>
+  <li>The representation stays faithful when the environment shifts.</li>
+</ul>
+
+<p>What struck me most is the inversion of a classical result. In linear ICA, the Gaussian is the one distribution where source separation fails. Here, in a nonlinear SSL setting, it is precisely what enables it.</p>
+
+<p>The practical caveat is real, though. The guarantee only holds when your training data explores the world broadly and evenly. A dashcam that only ever drives the same highway route will see a narrow slice of all possible scenes, and a model trained on that data loses the guarantee, no matter how good the architecture. Their experiments confirm it. For self-supervised pretraining, how you collect data turns out to matter as much as what you train on it.</p>
+
+<p>For those of us building production vision systems where “it works on the benchmark” is not enough, this kind of theoretical grounding is exactly what the field needs.</p>
+
+<p>Thanks to Yann LeCun, Randall Balestriero, and David Klindt for the work.</p>]]></content><author><name>Prakhar Thakur</name></author><category term="research" /><category term="jepa" /><category term="self-supervised-learning" /><category term="representation-learning" /><category term="world-models" /><category term="identifiability" /><summary type="html"><![CDATA[A recent identifiability result shows when a JEPA model provably recovers the true structure of the world, and why how you collect data matters as much as the architecture you choose.]]></summary></entry><entry><title type="html">Why Vision-Language Models Are (Almost) Useless</title><link href="http://localhost:4000/blog/why-vision-language-models-are-almost-useless/" rel="alternate" type="text/html" title="Why Vision-Language Models Are (Almost) Useless" /><published>2024-11-13T00:00:00+05:30</published><updated>2024-11-13T00:00:00+05:30</updated><id>http://localhost:4000/blog/why-vision-language-models-are-almost-useless</id><content type="html" xml:base="http://localhost:4000/blog/why-vision-language-models-are-almost-useless/"><![CDATA[<p>The advent of Vision-Language Models (VLMs) promised a revolution in AI, offering a seamless blend of visual and linguistic understanding. These models showcased the ability to generate descriptive captions for images, answer visual questions, and even assist in complex tasks involving both vision and language. Yet, beyond the impressive demos and proof-of-concept projects (POCs), their real-world utility often falls short. Let’s delve into why VLMs struggle in practical applications, what limitations they face, and explore a path forward that could make them genuinely useful for industrial and practical needs.</p>
+
+<!--more-->
+
+<h2 id="the-fundamental-flaw">The Fundamental Flaw</h2>
+
+<p>Useful AI models transform unstructured data into structured, actionable outputs that can easily integrate into automated systems. VLMs, however, often generate unstructured text descriptions, which limit their direct applicability. For example, a VLM might generate a caption like “A person is sitting at a desk, using a computer,” but this text output lacks the structured data format required for downstream automation. Without structured data, these models struggle to interface with systems, trigger automated actions, or even provide consistent, predictable information that can be directly utilized by machines.</p>
+
+<p>Another issue with VLMs is that their outputs are inherently probabilistic and often require human intervention to verify. In real-world environments, such as manufacturing or healthcare, the need for manual verification can be a major drawback. Decision-makers need AI outputs that are not only accurate but also reliably formatted in a way that can be understood by other software and machines, without relying on additional natural language processing (NLP) steps. This fundamental flaw restricts the scalability and effectiveness of VLMs in domains where automation is key.</p>
+
+<h2 id="the-solution-vision-to-structured-language">The Solution: Vision to Structured Language</h2>
+
+<p>To unlock the potential of VLMs, we must shift towards Vision-Structured Language Models (VSLMs), which transform visual inputs into structured data formats like JSON. By producing structured outputs, we can bridge the gap between perception and action, making AI more relevant and applicable in real-world scenarios. This approach demands high-quality, predictable outputs that can be verified and easily used by existing software systems for decision-making and automation.</p>
+
+<p>Imagine a VSLM that, instead of producing a generic description, outputs a well-structured JSON object, detailing the objects, actions, and contexts present in an image. For instance, instead of generating “A person wearing a blue shirt is riding a bicycle,” the model could output:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"person"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"clothing"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blue shirt"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"activity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"riding"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"vehicle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bicycle"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"distance"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Such a structured representation can be directly used by other systems to trigger automated actions, such as generating alerts, initiating workflows, or providing clear analytics. Structured data is inherently easier to integrate into existing systems and can significantly reduce the friction between AI perception and practical utility.</p>
+
+<p>Some models, particularly Florence-2, represent significant progress in this direction. Florence-2 has demonstrated improved capabilities in bridging visual inputs to structured language outputs, showing promise in delivering more actionable and structured insights from complex visual data. Its architecture is specifically designed to enhance accuracy while providing outputs that are easier to integrate into downstream systems, making it an important milestone towards the vision of Vision-Structured Language Models.</p>
+
+<h2 id="why-this-shift-matters">Why This Shift Matters</h2>
+
+<p>Moving from Vision-Language Models to Vision-Structured Language Models isn’t just a technical upgrade. It’s a fundamental shift in how we think about applying AI. This transition is about making AI practical and actionable for industries that thrive on efficiency, automation, and seamless data integration. Whether it’s logistics, where identifying and categorizing goods accurately can streamline operations, or healthcare, where structured data can be used to monitor patient conditions in real-time, VSLMs have the potential to dramatically enhance productivity and decision-making.</p>
+
+<p>Additionally, this transition could pave the way for better integration into existing enterprise systems. Unlike free-form text, structured outputs can be directly used by databases, management software, and automation tools without needing complex NLP parsing or human oversight. Structured data is inherently more predictable, easier to validate, and less prone to ambiguity, which makes it a much more reliable component for building automated solutions.</p>
+
+<p>I’m curious to hear from others working with AI. Do you see similar limitations in current VLM approaches?</p>]]></content><author><name>Prakhar Thakur</name></author><category term="engineering" /><category term="vlms" /><category term="structured-output" /><category term="production" /><category term="florence-2" /><summary type="html"><![CDATA[Vision-language models produce fluent text but not structured data, which is why they stall in real systems. The fix is moving from vision-to-language to vision-to-structured-output.]]></summary></entry><entry><title type="html">The Rise of Disposable Code: How AI Is Changing the Way We Code</title><link href="http://localhost:4000/blog/the-rise-of-disposable-code/" rel="alternate" type="text/html" title="The Rise of Disposable Code: How AI Is Changing the Way We Code" /><published>2024-11-12T00:00:00+05:30</published><updated>2024-11-12T00:00:00+05:30</updated><id>http://localhost:4000/blog/the-rise-of-disposable-code</id><content type="html" xml:base="http://localhost:4000/blog/the-rise-of-disposable-code/"><![CDATA[<p>In the ever-evolving landscape of software development, a new paradigm has emerged: disposable code. This concept, born from the capabilities of artificial intelligence and large language models, is reshaping how we approach coding. These AI tools empower us to generate vast amounts of code quickly, enabling us to solve problems on the fly without the need for complex setups or an in-depth understanding of every tool we use.</p>
+
+<!--more-->
+
+<h2 id="a-real-world-scenario">A Real-World Scenario</h2>
+
+<p>Imagine this: you’re a data scientist tasked with transforming a dataset in a very specific way, one that you’ve never encountered before. Traditionally, you might have to spend hours searching for the right tool, learning how to configure it, and then adapting it to your use case. Now, with AI, you can simply describe the problem, generate a quick script, execute it, and dispose of the code when you’re done. What once took hours can now be done in minutes.</p>
+
+<h2 id="the-essence-of-disposable-code">The Essence of Disposable Code</h2>
+
+<p>This rapid generation and execution of code is the essence of disposable code. It allows us to focus on solving the problem at hand, quickly iterating, experimenting, and moving on without getting bogged down by the intricacies of traditional software development. Of course, this new paradigm comes with trade-offs. Disposable code may not be as durable or robust as traditional code, making it unsuitable for long-term or production projects where maintainability is key. But in the right context, it’s a game changer, enabling creativity and speeding up the process of turning ideas into reality.</p>
+
+<h2 id="the-critics-and-the-trade-offs">The Critics and the Trade-Offs</h2>
+
+<p>Yet, as with anything new, it has its critics. Disposable code can be compared to the analogy of crockery. Traditional coding is like using fine ceramic crockery: beautiful, durable, and meant to be used repeatedly with care. It takes time and effort to craft, but it is reliable for long-term use.</p>
+
+<p>On the other hand, disposable code is like using paper plates or plastic cups. It’s convenient, quick to use, and can be thrown away once it has served its purpose. It may lack the durability of ceramic, but in situations where speed and practicality are key, it is the perfect choice. Experienced programmers, who often value deeply understanding the tools they use, may see disposable code as lacking the rigor needed to ensure quality and sustainability. But perhaps the beauty of this approach is that it’s not about replacing traditional coding, it’s about complementing it. Disposable code is like using a paper cup instead of a ceramic one: it’s quick, it’s practical, and it serves its purpose when speed is more important than permanence.</p>
+
+<h2 id="embracing-imperfection">Embracing Imperfection</h2>
+
+<p>Embracing the imperfections of this method is key to its success. We often get caught up in the idea that everything we create must be perfect, but sometimes “good enough” is exactly what we need. By adopting disposable code, we can focus on what truly matters, solving problems, innovating, and pushing boundaries, without getting bogged down by the pursuit of perfection. In the fast-paced world of technology, adaptability and speed can often make all the difference.</p>]]></content><author><name>Prakhar Thakur</name></author><category term="ideas" /><category term="ai-tooling" /><category term="llms" /><category term="software-engineering" /><category term="productivity" /><summary type="html"><![CDATA[AI makes it cheap to write code you use once and throw away. A look at when disposable code is a genuine advantage and when durable, durable-by-design code still wins.]]></summary></entry><entry><title type="html">Leveraging Large Models to Empower Resource-Constrained Environments</title><link href="http://localhost:4000/blog/leveraging-large-models-for-resource-constrained-environments/" rel="alternate" type="text/html" title="Leveraging Large Models to Empower Resource-Constrained Environments" /><published>2023-06-01T00:00:00+05:30</published><updated>2023-06-01T00:00:00+05:30</updated><id>http://localhost:4000/blog/leveraging-large-models-for-resource-constrained-environments</id><content type="html" xml:base="http://localhost:4000/blog/leveraging-large-models-for-resource-constrained-environments/"><![CDATA[<p>In today’s rapidly evolving AI landscape, we see industry giants creating larger and more capable models that are pushing the boundaries of what artificial intelligence can achieve. However, it’s important to remember that not every use case can accommodate the resource requirements of these behemoth models.</p>
+
+<!--more-->
+
+<p>This is where the true potential of large AI models lies, in their ability to generate annotated data that can be used to train more compact models, tailor-made for resource-constrained scenarios. By harnessing the power of these large models, we can create smaller, efficient AI solutions that bring the benefits of advanced technology to a wider array of applications.</p>
+
+<p>Think of it as a relay race, where the larger models pass on their valuable insights to their smaller counterparts, ensuring that the benefits of cutting-edge AI are accessible to all, regardless of infrastructure limitations.</p>
+
+<p>As we continue to push the boundaries of AI, it’s crucial to develop sustainable and accessible solutions that can run on devices with limited resources. By leveraging the knowledge of large models, we can create a future where AI is not only more powerful but also more inclusive.</p>
+
+<p>Let’s embrace the potential of large AI models to generate annotated data and pave the way for smaller, more efficient models that can be deployed in resource-constrained environments. Together, we can democratize AI and empower everyone to harness its potential.</p>]]></content><author><name>Prakhar Thakur</name></author><category term="engineering" /><category term="edge-ai" /><category term="knowledge-distillation" /><category term="data-annotation" /><category term="efficiency" /><summary type="html"><![CDATA[Large models are most useful not as the final product but as a way to generate the training data for the small, efficient models you can actually deploy at the edge.]]></summary></entry></feed>
