@@ -1,0 +1,34 @@
+---
+layout: default
+---
+{%- assign words = content | number_of_words -%}
+{%- assign rt = words | divided_by: 200 | plus: 1 -%}
+<article class="article">
+  <div class="wrap wrap--read">
+    <header class="article__head">
+      {%- if page.categories.first -%}
+      <a class="article__cat" href="{{ '/categories/#' | append: page.categories.first | slugify | relative_url }}">{{ page.categories.first }}</a>
+      {%- endif -%}
+      <h1 class="article__title">{{ page.title }}</h1>
+      <div class="article__meta">
+        <span>{{ page.date | date: "%B %-d, %Y" }}</span>
+        <span>{{ rt }} min read</span>
+      </div>
+    </header>
+
+    <div class="prose">
+      {{ content }}
+    </div>
+
+    <footer class="article__foot">
+      {%- if page.tags.size > 0 -%}
+      <div class="tags">
+        {%- for tag in page.tags -%}
+        <a class="tag" href="{{ '/tags/#' | append: tag | slugify | relative_url }}">{{ tag }}</a>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+      <a class="backlink" href="{{ '/' | relative_url }}">← All writing</a>
+    </footer>
+  </div>
+</article>

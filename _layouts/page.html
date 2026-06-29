@@ -1,0 +1,12 @@
+---
+layout: default
+---
+<div class="page">
+  <div class="wrap wrap--read">
+    {%- if page.title -%}<h1 class="page__title">{{ page.title }}</h1>{%- endif -%}
+    <div class="prose">
+      {{ content }}
+    </div>
+    <a class="backlink" href="{{ '/' | relative_url }}">← All writing</a>
+  </div>
+</div>

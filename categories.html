@@ -1,0 +1,41 @@
+---
+layout: default
+title: Topics
+description: Browse writing by topic and tag.
+permalink: /categories/
+---
+<div class="page">
+  <div class="wrap wrap--read">
+    <h1 class="page__title">Topics</h1>
+    <div class="prose">
+      <p>Four threads run through what I write: the reality of getting machine learning to work in production, the theory of how models represent the world, ideas and mental models worth borrowing, and the philosophy of mind behind all of it.</p>
+    </div>
+
+    <div class="taxo">
+      {%- assign cats = site.categories | sort -%}
+      {%- for cat in cats -%}
+      <section class="taxo__group" id="{{ cat[0] | slugify }}">
+        <h2 class="taxo__head">{{ cat[0] }} <span class="count">{{ cat[1].size }}</span></h2>
+        <ul class="taxo__list">
+          {%- for post in cat[1] -%}
+          <li>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y" }}</time>
+          </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+      {%- endfor -%}
+    </div>
+
+    <h2 class="taxo__head" style="margin-top:2.6rem;">All tags</h2>
+    <div class="tags" style="margin-top:1rem;">
+      {%- assign tags = site.tags | sort -%}
+      {%- for tag in tags -%}
+      <a class="tag" href="{{ '/tags/#' | append: tag[0] | slugify | relative_url }}">{{ tag[0] }}</a>
+      {%- endfor -%}
+    </div>
+
+    <a class="backlink" href="{{ '/' | relative_url }}">← All writing</a>
+  </div>
+</div>

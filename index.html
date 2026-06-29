@@ -1,0 +1,23 @@
+---
+layout: default
+title: Prakhar Thakur
+description: >-
+  Essays on applied machine learning, representation learning, and the
+  philosophy of mind as it bears on AI architecture.
+---
+<section class="intro">
+  <div class="wrap">
+    <p class="intro__eyebrow">In ML since 2018, before it was the headline</p>
+    <p class="intro__lead">I build computer vision that has to work in the real world, and I write about <em>how machines come to represent it</em>.</p>
+    <p class="intro__sub">Notes on applied ML and the gap between research and production, self-supervised and representation learning, and the philosophy of mind as it bears on how we design these systems. Less hype, more about what actually holds up.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="section-label">Writing</p>
+  <ul class="posts">
+    {%- for post in site.posts -%}
+      {%- include post-row.html post=post -%}
+    {%- endfor -%}
+  </ul>
+</section>

@@ -1,0 +1,51 @@
+# ----- Site identity -----
+title: Prakhar Thakur
+tagline: "Computer vision, representation learning, and how machines come to understand the world."
+description: >-
+  Essays on applied machine learning, self-supervised and representation
+  learning, and the philosophy of mind as it bears on AI architecture. Written
+  by Prakhar Thakur, a computer vision engineer working on production medical AI.
+author:
+  name: Prakhar Thakur
+  twitter: ""           # add your handle if you have one (no @)
+
+# ----- URLs (EDIT these) -----
+url: "https://itsprakhar.github.io"   # your GitHub Pages URL
+baseurl: ""                           # leave empty for a user site (user.github.io)
+
+# ----- Author social, used by jekyll-seo-tag -----
+social:
+  name: Prakhar Thakur
+  links:
+    - https://www.linkedin.com/in/prakhar-thakur/
+    - https://github.com/itsprakhar
+
+linkedin: "https://www.linkedin.com/in/prakhar-thakur/"
+github: "https://github.com/itsprakhar"
+
+# ----- Build -----
+markdown: kramdown
+permalink: /blog/:title/
+timezone: Asia/Kolkata
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Nicer post excerpts on the home page
+excerpt_separator: "<!--more-->"
+
+# Default front matter so posts stay tidy
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

@@ -1,0 +1,28 @@
+---
+layout: default
+title: Tags
+description: Browse all writing by tag.
+permalink: /tags/
+---
+<div class="page">
+  <div class="wrap wrap--read">
+    <h1 class="page__title">Tags</h1>
+    <div class="taxo">
+      {%- assign tags = site.tags | sort -%}
+      {%- for tag in tags -%}
+      <section class="taxo__group" id="{{ tag[0] | slugify }}">
+        <h2 class="taxo__head">#{{ tag[0] }} <span class="count">{{ tag[1].size }}</span></h2>
+        <ul class="taxo__list">
+          {%- for post in tag[1] -%}
+          <li>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+          </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+      {%- endfor -%}
+    </div>
+    <a class="backlink" href="{{ '/' | relative_url }}">← All writing</a>
+  </div>
+</div>
